@@ -44,11 +44,11 @@
 # print (0.1 + 0.1 == 0.2) #- retur TRUE
 # print (0.1 + 0.2 == 0.3) #- retur FALSE this could be a result of continous decimal point
 # print (0.1 + 0.3 == 0.4) #- retur TRUE
-#### the print IF BUG
 
 
 
 
+# testing 
 
 
 
