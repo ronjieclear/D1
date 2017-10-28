@@ -8,6 +8,10 @@ print(message)
 #newMessage = message.replace('Hello\'s','Hi')
 #print(newMessage)
 
+
+# print(message.upper()) #-uppercase
+# print(message.lower()) #-lowercase
+
 #######string concatenation####
 # greeting = "Hello"
 # name = "Python"

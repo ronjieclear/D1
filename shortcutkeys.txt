@@ -1,0 +1,14 @@
+
+Key Combination				Action	
+Ctrl + Shift + [ 			Fold line of code /must highlight first
+Ctrl + Shift + ]			Unfold lines
+Ctrl + Shift + P			Package Instaler
+Ctrl + Shift + D			Duplicate the while line of code
+Ctrl + Shift + M			Select all char inside a bracket or parentheses
+Ctrl + Shift + Arrow Up		Move up one line 
+Ctrl + Shift + Arrow Down	Move down one line 
+
+Ctrl + D 					Select highlighted word and its occurance
+Ctrl + B					Run Code
+Ctrl + /					Comment & Uncomment line or multi line of code
+Ctrl + F3					Run through each highligted word or character	

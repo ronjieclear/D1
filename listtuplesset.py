@@ -94,8 +94,13 @@ courses.extend(kurso)
 #list are mutable it means; a list is assign to another when the first list is updated the 
 #secon will also be updated even thought it is not re assign
 
+#LIST
 # array = ['Filipino', 'English', 'Math']   #<- this is a LIST 		mutable		- can be modify	
+#TUPLES
 # array = ('Filipino', 'English', 'Math')   #<- this is a TUPLES  	unmutable	- cant be modify
+#DICTIONARY
+# array = {'name':'Jhon','subjects':'Filipino', 'English', 'Math'}   #<- this is DICTIONARY
+#SETS
 # array = {'Filipino', 'English', 'Math', 'English'}   #<- this is a SETS		- randomly print values
 #																				- remove duplicates		
 # list is optimize for comparing and union, find difference and intersection
