@@ -29,11 +29,21 @@ def str_column_to_float(dataset, column):
 def str_column_to_int(dataset, column):
 	class_values = [row[column] for row in dataset]
 	unique = set(class_values)
+	l_unique=[]
+	for itm in unique:
+		l_unique.append(itm)	
+	l_unique.sort(reverse=False)
+	unique=[]
+	for itm in l_unique:
+		unique.append(itm)	
+	
+	print(unique)
 	lookup = dict()
 	for i, value in enumerate(unique):
 		lookup[value] = i
 	for row in dataset:
-		row[column] = lookup[row[column]]
+		row[column] = lookup[row[column]]    # {solved by l_unique}Classifier value varies depending on the first class detected
+	print(lookup)
 	return lookup
 
 # Find the min and max values for each column
@@ -221,10 +231,10 @@ def back_propagation(train, test, l_rate, n_epoch, n_hidden):
 			#print(row)
 			prediction2 = predict(network, row)  #row row
 			predictions2.append(prediction2)	
-			print("----------------TESTING--------------S---------------------")
-			print(row)
+			#print("----------------TESTING--------------S---------------------")
+			#print(row)
 			print(prediction2)				
-			print("----------------TESTING--------------E---------------------")
+			#print("----------------TESTING--------------E---------------------")
 
 	return(predictions)
 #----------------------------------------------------------------------------------------------------------------
@@ -269,9 +279,9 @@ seed(1)
 bilang=0
 # load and prepare data
 filename = 'seeds_dataset.csv'
-dataset = load_csv(filename)
+dataset = load_csv(filename)    #array|set of csv 
 for i in range(len(dataset[0])-1):
-	str_column_to_float(dataset, i)
+	str_column_to_float(dataset, i)    #convert string cell value to float
 
 # convert class column to integers
 str_column_to_int(dataset, len(dataset[0])-1)
