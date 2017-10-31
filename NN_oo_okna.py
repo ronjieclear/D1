@@ -5,7 +5,7 @@ from random import random
 from csv import reader
 from math import exp
 import math
-
+import copy
 
 bilang=0
 
@@ -43,7 +43,7 @@ def str_column_to_int(dataset, column):
 		lookup[value] = i
 	for row in dataset:
 		row[column] = lookup[row[column]]    # {solved by l_unique}Classifier value varies depending on the first class detected
-	print("Class Assignment: {}".format(lookup))
+	#print("Class Assignment: {}".format(lookup))
 	return lookup
 
 # Find the min and max values for each column
@@ -203,7 +203,7 @@ def initialize_network(n_inputs, n_hidden, n_outputs):
 def predict(network, row):
 	outputs = forward_propagate(network, row)
 	# print('ppppppppppppS')
-	# print(network)	
+	# print(network)	#<-could display the MODEL
 	# print(row)	
 	# print(outputs)	
 	# print('ppppppppppppE')
@@ -232,98 +232,46 @@ def back_propagation(train, test, l_rate, n_epoch, n_hidden):
 	for row in test:
 		prediction = predict(network, row)  #row row
 		predictions.append(prediction)	
-		# print("----------------BACKPROP-----------S------------------------")
-		# print(row)
-		# print(prediction)				
-		# print("----------------BACKPROP-----------E------------------------")
-	# return(predictions)
-
-	#working same as the result of back prop
-	#however the problem is the normalization
-	testing=[[0.7610953729933899, 0.8264462809917356, 0.5598911070780399, 0.7804054054054056, 0.6870990734141124, 0.4714532759494988, 0.7794190054160515, None],
-	         [0.6128423040604343, 0.6136363636363638, 0.9056261343012707, 0.5253378378378378, 0.7505345687811829, 0.2848691310509824, 0.4751354012801576, None],
-	         [0.4702549575070822, 0.566115702479339, 0.40471869328493637, 0.5748873873873874, 0.42836778332145387, 0.24378161203500245, 0.6696208764155587, None],
-	         [0.014164305949008532, 0.0661157024793389, 0.22504537205081615, 0.13851351351351326, 0.008553100498930866, 0.5118906759937069, 0.21861152141802068, None],
-	         [0.7610953729933899, 0.8264462809917356, 0.5598911070780399, 0.7804054054054056, 0.6870990734141124, 0.4714532759494988, 0.7794190054160515, None]]
-	global bilang
-	bilang+=1
-	if bilang==5:
-		predictions2 = list()
-		for row in testing:
-			#print(row)
-			prediction2 = predict(network, row)  #row row
-			predictions2.append(prediction2)	
-			#print("----------------TESTING--------------S---------------------")
-			#print(row)
-			print(prediction2)				
-			#print("----------------TESTING--------------E---------------------")
-
 	return(predictions)
 #----------------------------------------------------------------------------------------------------------------
-def back_propagation2():
-	# the duplicate works but return worng classification - fixed to #2
-	network = initialize_network(7, 5, 3)
 
-	testing=[[0.7610953729933899, 0.8264462809917356, 0.5598911070780399, 0.7804054054054056, 0.6870990734141124, 0.4714532759494988, 0.7794190054160515, None],
-	         [0.6128423040604343, 0.6136363636363638, 0.9056261343012707, 0.5253378378378378, 0.7505345687811829, 0.2848691310509824, 0.4751354012801576, None],
-	         [0.4702549575070822, 0.566115702479339, 0.40471869328493637, 0.5748873873873874, 0.42836778332145387, 0.24378161203500245, 0.6696208764155587, None],
-	         [0.014164305949008532, 0.0661157024793389, 0.22504537205081615, 0.13851351351351326, 0.008553100498930866, 0.5118906759937069, 0.21861152141802068, None]]
-
-	predictions2 = list()
-	for row in testing:
-		#print(row)
-		prediction2 = predict(network, row)  #row row
-		predictions2.append(prediction2)	
-		# print("----------------TESTING--------------S---------------------")
-		# print(row)
-		# print(prediction2)				
-		# print("----------------TESTING--------------E---------------------")
 #----------------------------------------------------------------------------------------------------------------
 
 def direct():
-	print('SppppppppppppS')
-	
-	dataset_ko=[
-				['15.26','14.84','0.871','5.763','3.312','2.221','5.22','1'],
-				['17.12','15.55','0.8892','5.85','3.566','2.858','5.746','2'],
-				['16.63','15.46','0.8747','6.053','3.465','2.04','5.877','1'],
-				['18.27','16.09','0.887','6.173','3.651','2.443','6.197','2'],
-				['11.56','13.31','0.8198','5.363','2.683','4.062','5.182','3'],
-				['12.3','13.34','0.8684','5.243','2.974','5.637','5.063','3']
-				]
-
+	print('-----------------R E S U L T   S T A R T-----------------')
+	filename_ko = 'seeds_dataset_test.csv'
+	dataset_ko = load_csv(filename_ko)  
+	# dataset_ko=[
+	# 			['15.26','14.84','0.871','5.763','3.312','2.221','5.22','1'],
+	# 			['17.12','15.55','0.8892','5.85','3.566','2.858','5.746','2'],
+	# 			['16.63','15.46','0.8747','6.053','3.465','2.04','5.877','1'],
+	# 			['18.27','16.09','0.887','6.173','3.651','2.443','6.197','2'],
+	# 			['11.56','13.31','0.8198','5.363','2.683','4.062','5.182','3'],
+	# 			['12.3','13.34','0.8684','5.243','2.974','5.637','5.063','3']
+	# 			]
+	dataset_orig = copy.deepcopy(dataset_ko)
 	for i in range(len(dataset_ko[0])-1):
 		str_column_to_float(dataset_ko, i) 
 	str_column_to_int(dataset_ko, len(dataset_ko[0])-1)
+	
 	normalize_dataset(dataset_ko, minmax)
 
 	nett=[[{'weights': [1.5261865922546158, 0.24323582411800948, 0.41086127149905133, -10.210894951294394, 2.971618428613504, 4.829452837378416, 8.482266135864739, -2.930164292063065], 'output': 0.8353085738105864, 'delta': -1.6668142756760569e-06}, {'weights': [5.645862290503782, 4.39844579859114, -1.0265985077134054, -7.672538827771478, 4.04632845224292, 4.373217175387437, 7.485387111523629, -8.922428615371018], 'output': 0.9578503488282164, 'delta': -2.8033099606451573e-10}, {'weights': [5.105345173323351, 5.446511942724408, -0.4912655858010164, 9.01239716633781, 1.122037737753915, 0.2812377580432156, -13.301553363686505, -1.3795067674428845], 'output': 0.9866358285755943, 'delta': 3.5104085927662727e-06}, {'weights': [1.0121048667102934, 1.0565761290555027, -0.6075916292848027, 0.558380406776694, 2.239710688150816, 0.630850933442254, 4.283128402215938, -0.7259248385713641], 'output': 0.9979499447996072, 'delta': -1.2059055225281552e-06}, {'weights': [5.18187887257841, 5.395353598927418, 0.11020442723693302, 5.216500814551704, 3.68156811329991, -1.2355632063506787, -1.060985454954308, -5.0684242316927115], 'output': 0.9998135716482487, 'delta': 2.58417694359122e-06}], [{'weights': [-7.576522409412085, -10.804628951006134, 11.441908258951015, -2.693384314173221, 2.538895156854417, 0.3235715007517538], 'output': 0.0054060036098133825, 'delta': 3.6007146172173457e-07}, {'weights': [6.289831046658422, 8.369299518716346, -1.168708022511552, -4.41715542146618, 4.399536177133271, -7.250656329101941], 'output': 0.9922889248804062, 'delta': -9.60148482147022e-09}, {'weights': [6.931419160916442, -2.0721449833677537, -9.72853009967772, 2.8684517401492484, -5.8225761799395865, 0.1820619244556481], 'output': 0.00018961887140228845, 'delta': -1.8611535175932023e-06}]]	
 	roww=dataset_ko
+
 	c=0
 	for i in roww:
 		roww[c][-1] = None
 		c+=1
-
+	c=0
 	for rowwin in roww:
 		outputs = forward_propagate(nett, rowwin)
-		print(outputs.index(max(outputs)))
+		predictedresult=outputs.index(max(outputs))
+		print("Data:{} \tResult:{}".format(dataset_orig[c],predictedresult))
+		c+=1
 
-	print('EppppppppppppE')
+	print('-----------------R E S U L T   E N D -----------------')
 
-def pasok():
-	print("pasok")
-	# predictions = list()
-	# network = [7, 5, 3]
-	testing=[[0.7610953729933899, 0.8264462809917356, 0.5598911070780399, 0.7804054054054056, 0.6870990734141124, 0.4714532759494988, 0.7794190054160515, None],
-	         [0.7610953729933899, 0.8264462809917356, 0.5598911070780399, 0.7804054054054056, 0.6870990734141124, 0.4714532759494988, 0.7794190054160515, None]]
-	print(type(testing))        
-	print(type(network))   
-	#for row in testing:		
-	prediction = predict(network, testing[0])
-	# 	predictions.append(prediction)
-	print(row)
-	print(prediction)
-	# return(predictions)
 
 #----------------------------------------------------------------------------------------------------------------
 # Test Backprop on Seeds dataset
@@ -332,9 +280,7 @@ bilang=0
 # load and prepare data
 filename = 'seeds_dataset.csv'
 dataset = load_csv(filename)    #array|set of csv 
-# print("------------------data set---------NORMAL--------start")
-# print(dataset)
-# print("------------------data set---------NORMAL--------end")
+
 for i in range(len(dataset[0])-1):
 	str_column_to_float(dataset, i)    #convert string cell value to float
 
@@ -345,13 +291,9 @@ str_column_to_int(dataset, len(dataset[0])-1)
 minmax = dataset_minmax(dataset)
 
 normalize_dataset(dataset, minmax)
-# print("------------------data set---------NORMALIZED--------start")
-# print(minmax)
-# print("------------------data set---------NORMALIZED--------end")
-
 
 # evaluate algorithm
-n_folds = 6
+n_folds = 5
 l_rate = 0.3
 n_epoch = 500
 n_hidden = 5
